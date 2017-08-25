@@ -1,0 +1,144 @@
+#include <iostream>
+using namespace std;
+
+void letterCounter(char[]); //function for counting the letters of a word
+void occurenceThingy(int[],int); //function for determining the occurence of how many letter a word has
+void doTheThing(int[],int); // display the output
+
+int main(){
+
+	char sentence1[512],sentence2[512],sentence3[512];
+
+	cout<<" Enter Complete Sentences \n\n";
+	cout<<" Enter first sentence: ";
+	cin.getline(sentence1,512,'.');		// needs period delimiter? ,'.'
+										// if period is not seen in the inputs it will still accept
+	cout<<" Enter second sentence: ";	// words for the current sentence, and when it sees 
+	cin.getline(sentence2,512,'.');		// multiple period in the same sentence it automatically
+										// start to store the inputs after the period to the next variable
+	cout<<" Enter third sentence: ";
+	cin.getline(sentence3,512,'.');
+
+	cout<<"\nSentence 1: \tWord length \t Occurence \n";
+	letterCounter(sentence1);
+	cout<<"\nSentence 2: \tWord length \t Occurence \n";
+	letterCounter(sentence2);
+	cout<<"\nSentence 3: \tWord length \t Occurence \n";
+	letterCounter(sentence3);
+
+	cout<<"\n\n";
+
+return 0;
+}//main end
+
+
+
+void letterCounter(char sentenceToWords[512]){	// find how many letters are there in a word
+												// not counting comma's, spaces, apostrophe and other marks
+
+	int sentenceWord[512],letterCount=0,wordLength=0,k=0;
+	char senEnd='\0';
+
+	for(int l=0;sentenceToWords[l]!='\0';l++){	// determine what is the ending mark 
+		if(sentenceToWords[l]=='\0'){			// in the sentence, period,exclamation,question mark
+			k=l;								// k is the index of the ending mark
+		}										
+		if(sentenceToWords[k]=='.'){			
+			senEnd=sentenceToWords[k];
+		}
+		else if (sentenceToWords[k]=='!'){		//	not utilized
+			senEnd=sentenceToWords[k];			//	when period delimeter
+		}										//	is employed in cin.getline
+		else if(sentenceToWords[k]=='?'){		//	at the main function
+			senEnd=sentenceToWords[k];
+		}
+	}
+
+	for(int i=0;sentenceToWords[i-1]!=senEnd;i++){	// count each letter(s) and store
+		if(isalpha(sentenceToWords[i])){			// the accumulated value to an another array
+			wordLength++;							// senEnd detemines that the sentence has ended,(sees the punctuation mark before '\0')//added
+		}											// sentenceToWords[i-1] --> when [i] is used the word next to the period is not counted.
+		
+		else{
+			if(	sentenceToWords[i]=='\'' || 		// when one of these symbols is found in the sentence
+				sentenceToWords[i]==',' || 			// it ignores that symbol and proceeds adding the next letters
+				sentenceToWords[i]=='.' || 			// with the previous letters eg. i'm = 2 letter word
+				sentenceToWords[i]=='?' || 			 
+				sentenceToWords[i]=='!' /*|| 		
+				sentenceToWords[i]==' ' */){		// if space is included here it adds every letter.
+				wordLength;	//cout<<"";				// space and other symbol not specified here separates every 'word'
+			}				
+			else{
+				if(wordLength>0){// this condition fixes ("0 appears" in the output) below//added
+					sentenceWord[letterCount]=wordLength;	// when the accumulated value is stored 
+					letterCount++;							// in the array it moves to next index, 
+					wordLength=0;							// and resets the count of letters back to zero
+				}
+			}
+		}
+	}
+
+
+
+	occurenceThingy(sentenceWord,letterCount);	// function call to calculate the occurence.
+												// it accepts the new array where the length of words 
+												// was stored as the first parameter and the 
+												// length of the new array as the sencond parameter
+
+}//letter counter end
+
+
+
+void occurenceThingy(int occuredWordsSizes[64], int occuredWordsSizesLength){	// determine how many times 
+																				// the word with X number of letter's 
+																				// occurence in the sentence
+
+													//	ex.		you know nothing, jon snow.
+													//			_______________________________
+													//			_3_|_4_|_7_|_3_|_4_|___|___|___	
+	int count[64]/*how long the words are*/={0};	//
+	int wordMostLetters=0,i;						//					count[]
+	for(i = 0; i< occuredWordsSizesLength; i++){	//			_______________________________			_______________________________			_______________________________			_______________________________			_______________________________
+		count[occuredWordsSizes[i]]++;//	--->	//			___|___|___|_1_|___|___|___|___		->	___|___|___|_1_|_1_|___|___|___		->	___|___|___|_1_|_1_|___|___|_1_		->	___|___|___|_2_|_1_|___|___|_1_		->	___|___|___|_2_|_2_|___|___|_1_
+													//			 0	 1	 2	 3	 4	 5	 6	 7			 0	 1	 2	 3	 4	 5	 6	 7			 0	 1	 2	 3	 4	 5	 6	 7			 0	 1	 2	 3	 4	 5	 6	 7			 0	 1	 2	 3	 4	 5	 6	 7
+
+
+		if(occuredWordsSizes[i]>wordMostLetters){	// determine the word with most letters//added
+			wordMostLetters=occuredWordsSizes[i];	// 
+		}
+	}
+
+
+	for(i = 0/* if set to 0 it shows: "0 appears" in the output //fixed above */; i<wordMostLetters+1/* how many appearances it can show */; i++){
+		if(count[i]/*==1*/){
+			doTheThing(count,i);	// function call to output the number and how many times it occurs
+		}
+		//else if(count[i]!=0){		// seems redundant commented out. the condition works better on the function call, i think...
+		//	doTheThing(count,i);
+		//}
+	}
+
+
+}// occurence function end
+
+
+
+void doTheThing(int counter[64],int aye){		// display output
+												
+	if(counter[aye]==1){						// the output show the length of the word
+		cout<<"\t\t"<<aye						// and how many times it occured in a sentence.
+			<<" appears\t  1 time.\n\n";		// it displays in ascending order of word length
+	}											// //added
+	else if(counter[aye]!=0){					//	the output : X appears 	Z times
+		cout<<"\t\t"<<aye						//	the X is the index 
+			<<" appears\t  "					//	and Z is the value stored in that array index.
+			<<counter[aye]<<" times\n\n";
+	}
+	
+
+}// display the output end
+
+
+//
+//v3
+//
