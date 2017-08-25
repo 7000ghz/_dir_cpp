@@ -1,0 +1,69 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int i=0;	// counting, index
+bool ccase=true;	//  check if the current letter in the index is not the same case with the next letter
+bool cap=true;	//  to determine if the current letter in the index is Uppercase or Lowercase
+void back2main();	//  back to main funcion prototype
+
+int func1(string get){  // function to check if the word less than 10 letters it goes back to main. accepts 10 or more letter word
+	if(get.size()<10){
+		back2main();
+	}
+return 0;
+}// word size checker end
+
+void func2(string get){	//  camel case checker function 
+	int j=get.size()-1;	//  j store the length of the word. minus 1 to get the last letter with index "i+1"
+	if(i==j && ccase==true){	//  show that the word entered is indeed written in camel case. the "ccase" variable should be true all the way to the end and the counter i is equal to j,
+		cout<<"camel case ";
+	}
+	if(ccase==true){	// recursive case. to check each letter in the word if it is Uppercase or Lowercase
+		if(i<j){
+			if(islower(get[i])){	//  check if the letter is lower case
+				cap=true;			//  true or false doesnt affect anything, its just to keep in a bool for the switch statement, cause its easier that way. i think.
+			}else if(isupper(get[i])){	//  check if the letter is Upper case
+				cap=false;
+			}
+			switch(cap){	//  switch statment to determine if the current letter and the next letter are different cases
+				case true:
+					if(isupper(get[i+1])){	// if true it will just continue to the end, j
+						ccase=true;
+					}else if(islower(get[i+1])){	// when the next letter is the same case with the current letter. "ccase" becomes false and stop the recursive case and go to base case next
+						ccase=false;
+					}
+					break;
+				case false:
+					if(islower(get[i+1])){	//  
+						ccase=true;
+					}else if(isupper(get[i+1])){	//  
+						ccase=false;
+					}
+					break;
+			}
+			i++;
+			func2(get);
+		}
+	
+	}else{	//  base case 
+		cout<<"NOT camel case ";
+	}
+}// camel case checker function end
+
+
+int main(){	// main function
+	string get;
+	cout<<"enter 10 letter word: ";
+	cin>>get;
+	func1(get);
+	func2(get);
+
+
+cout<<"\n\n";	
+return 0;
+}// main function end
+
+void back2main(){
+	main();
+}// back to main function end
