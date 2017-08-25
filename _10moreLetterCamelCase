@@ -30,14 +30,14 @@ void func2(string get){	//  camel case checker function
 				case true:
 					if(isupper(get[i+1])){	// if true it will just continue to the end, j
 						ccase=true;
-					}else if(islower(get[i+1])){	// when the next letter is the same case with the current letter. "ccase" becomes false and stop the recursive case and go to base case next
+					}else if(islower(get[i+1])){	// when the next letter is the same case with the current letter. "ccase" becomes false and on the next function call it will skip the recursive case and go to base case
 						ccase=false;
 					}
 					break;
 				case false:
-					if(islower(get[i+1])){	//  
+					if(islower(get[i+1])){
 						ccase=true;
-					}else if(isupper(get[i+1])){	//  
+					}else if(isupper(get[i+1])){
 						ccase=false;
 					}
 					break;
