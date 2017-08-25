@@ -16,29 +16,29 @@ return 0;
 
 void func2(string get){	//  camel case checker function 
 	int j=get.size()-1;	//  j store the length of the word. minus 1 to get the last letter with index "i+1"
-	if(i==j && ccase==true){	//  show that the word entered is indeed written in camel case. the "ccase" variable should be true all the way to the end and the counter i is equal to j,
+	if(i==j && ccase==true){	//  condition needed to meet to show that the word entered is indeed written in camel case. the "ccase" variable should be true all the way to the end when the counter i is equal to j,
 		cout<<"camel case ";
 	}
 	if(ccase==true){	// recursive case. to check each letter in the word if it is Uppercase or Lowercase
 		if(i<j){
 			if(islower(get[i])){	//  check if the letter is lower case
-				cap=true;			//  true or false doesnt affect anything, its just to keep in a bool for the switch statement, cause its easier that way. i think.
+				cap=false;			//  true or false doesnt affect anything, its just to keep in a bool for the switch statement, cause its easier that way. i think.
 			}else if(isupper(get[i])){	//  check if the letter is Upper case
-				cap=false;
+				cap=true;
 			}
-			switch(cap){	//  switch statment to determine if the current letter and the next letter are different cases
+			switch(cap){	//  switch statment to determine if next letter the current letter and the are different cases
 				case true:
 					if(isupper(get[i+1])){	// if true it will just continue to the end, j
-						ccase=true;
-					}else if(islower(get[i+1])){	// when the next letter is the same case with the current letter. "ccase" becomes false and on the next function call it will skip the recursive case and go to base case
 						ccase=false;
+					}else if(islower(get[i+1])){	// when the next letter is the same case with the current letter. "ccase" becomes false and on the next function call it will skip the recursive case and go to base case
+						ccase=true;
 					}
 					break;
 				case false:
 					if(islower(get[i+1])){
-						ccase=true;
-					}else if(isupper(get[i+1])){
 						ccase=false;
+					}else if(isupper(get[i+1])){
+						ccase=true;
 					}
 					break;
 			}
@@ -67,3 +67,4 @@ return 0;
 void back2main(){
 	main();
 }// back to main function end
+//
