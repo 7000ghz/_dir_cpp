@@ -1,0 +1,41 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+bool ars(int[]);
+int k=0;
+
+int main(){
+
+	bool abool;
+	int ar[10];
+	
+	cout<<"enter 10 numbers \n";
+	for(int i=0;i<10;i++){
+		cout<<setw(3)<<i+1<<": ";
+		cin>>ar[i];
+	}
+	
+	abool=ars(ar);
+
+	abool==true 
+		? cout<<"Ascending order \n" 
+		: cout<<"Not ascending order \n";
+	
+
+cout<<"\n\n";
+return 0;
+}
+
+
+bool ars(int ar[10]){
+	if(k<9){
+		if(ar[k]<ar[k+1]){
+			k++;
+		}else if(ar[k]>ar[k+1]){
+			return false;
+		}
+		ars(ar);
+	}else{ return true; }
+
+}
