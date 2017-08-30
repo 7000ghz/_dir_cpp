@@ -1,0 +1,137 @@
+#include <iostream>
+using namespace std;
+
+void back2main();
+int multfunc(int,int,int&);
+void divsfunc(int,int);
+void sums3(int);
+void sums3(int,int);
+
+int mi=0,anumber=0,sum=0,sum2=0,qout=0;
+
+int main(void){
+	int optn;
+	int mget1,mget2,prod=0;
+	int dget1,dget2;
+	int onetoN;
+	int nto1;
+	cout<<" Functions \n\n";
+	cout<<"[1] Multiplication \n"
+		<<"[2] Division \n"
+		<<"[3] Sum of 1 to N \n"
+		<<"[4] Sum of N to 1 \n"
+		<<"[5] EXIT \n\n"
+		<<">> ";
+
+	cin>>optn;
+	switch(optn){
+		case 1:
+			cout<<"Multiplication \n";
+			cout<<"Enter multiplier \n>> ";
+			cin>>mget1;
+			cout<<"Enter multiplicand \n>> ";
+			cin>>mget2;
+			multfunc(mget1,mget2,prod);
+			cout<<"The product of "<<mget1
+				<<" * "<<mget2
+				<<" = "<<prod<<"\n\n";
+		break;
+		case 2:
+			cout<<"Division \n";
+			cout<<"Enter dividend \n>> ";
+			cin>>dget1;
+			cout<<"Enter divisor \n>> ";
+			cin>>dget2;
+			cout<<"The qoutient of "
+				<<dget1<<" / "<<dget2;
+			divsfunc(dget1,dget2);
+	
+		break;
+		case 3:
+			cout<<"Sum of 1 to N \n>> ";
+			cout<<"Enter number \n>> ";
+			cin>>onetoN;
+			sums3(onetoN);
+		break;
+		case 4:
+			cout<<"Sum of N to 1 \n>> ";
+			cout<<"Enter number \n>> ";
+			cin>>nto1;
+			sums3(nto1,sum2);
+
+		break;
+		case 5:
+			cout<<" EXIT \n";
+		break;
+	
+		default:
+			cout<<"Invalid Option\n";
+			back2main();
+		break;
+	}
+
+
+return 0;
+}// main end
+
+int multfunc(int get1,int get2,int& prod){
+
+	if(mi<get2){
+		prod+=get1;
+		mi++;
+		multfunc(get1,get2,prod);
+	}
+
+	return prod;
+	
+}// multfunc end
+
+void divsfunc(int get1,int get2){
+	
+	if(get1>=get2){
+		get1-=get2;
+		qout++;
+		divsfunc(get1,get2);
+	}else{
+		cout<<" is "<<qout<<" with remainder of "<<get1<<".\n\n";
+	}
+	
+}//divsfunc end
+
+void sums3(int get){
+	if(anumber<get){
+		cout<<"sum "<<sum<<" number "<<anumber+1<<"\n";
+		anumber++;
+		sum+=anumber;
+		sums3(get);
+	}
+	else{
+		cout<<"The sum is "<<sum<<"\n\n";
+	}
+	
+}//sums3 end // void 1 parameter
+
+void sums3(int get, int sum2){
+
+
+	if(get>0){
+		cout<<"sum "<<sum2<<" number "<<get<<"\n";
+		sum2+=get;
+		get--;
+		sums3(get,sum2);
+	}
+	else{
+		cout<<"The sum is "<<sum2<<"\n\n";
+	}
+
+	
+}//sums3 end // void 2 parameter
+
+void back2main(){
+	main();
+}//backtomain end
+
+
+
+
+
