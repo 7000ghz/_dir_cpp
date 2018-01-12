@@ -1,0 +1,59 @@
+#include <iostream>
+#include <string>
+#include <algorithm>//swap function
+using namespace std;
+
+class person{
+private:
+  int age;
+  string name;
+public:
+  void GetInfo(string Name,int Age){
+    name=Name;
+    age=Age;
+  }
+  void ShowInfo(){
+    cout<<age<<" "<<name<<endl;
+  }
+  int ShowAge(){
+    return age;
+  }
+
+};//class person end
+
+
+int main(){
+
+  const int len=5;
+  person A[len];
+  string name;
+  int age,temp=0;
+
+  for(int i=0;i<len;i++){//Enter data loop
+    cout<<"Enter name: ";
+    cin>>name;
+    cout<<"Enter age: ";
+    cin>>age;
+    A[i].GetInfo(name,age);
+    cout<<endl;
+  }//enter data loop end
+
+  for(int i=0;i<len-1;++i){//sorting loop
+    int h=i;
+    for (int j=i+1;j<len;++j){
+      A[j].ShowAge()<A[h].ShowAge()?h=j:h;//ascending<,descending>
+    }
+    swap(A[i], A[h]);//swap function
+    /*temp=A[i];
+    A[i]=A[h];
+    A[h]=temp;//swap with temp*/
+    
+   }//sorting loop end
+
+  for (int i=0;i<len;++i){//display loop
+    A[i].ShowInfo();
+  }//display loop end
+
+
+return 0;
+}//main end
